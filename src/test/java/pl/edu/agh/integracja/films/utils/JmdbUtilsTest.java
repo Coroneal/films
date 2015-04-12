@@ -1,10 +1,11 @@
-package pl.edu.agh.integracja.films.jmdb;
+package pl.edu.agh.integracja.films.utils;
 
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
 import pl.edu.agh.integracja.films.jmdb.db.tables.pojos.Movies;
+import pl.edu.agh.integracja.films.utils.JmdbUtils;
 
 public class JmdbUtilsTest {
 

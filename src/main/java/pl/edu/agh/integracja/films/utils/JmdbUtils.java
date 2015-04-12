@@ -1,4 +1,4 @@
-package pl.edu.agh.integracja.films.jmdb;
+package pl.edu.agh.integracja.films.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

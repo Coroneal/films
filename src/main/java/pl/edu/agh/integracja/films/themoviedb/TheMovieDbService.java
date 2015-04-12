@@ -12,7 +12,7 @@ public class TheMovieDbService {
 		return new ArrayList<>();
 	}
 
-	public Movie getMovie(String title, int year) {
+	public Movie getMovie(String title, String year) {
 		return null;
 	}
 
