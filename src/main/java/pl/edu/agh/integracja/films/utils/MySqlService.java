@@ -4,9 +4,14 @@ import java.beans.PropertyVetoException;
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Collection;
+import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.Record;
 import org.jooq.SQLDialect;
+import org.jooq.Table;
 import org.jooq.impl.DSL;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
@@ -29,6 +34,29 @@ public abstract class MySqlService implements Closeable {
 
 	protected DSLContext getContext(Connection connection) {
 		return DSL.using(connection, SQLDialect.MYSQL);
+	}
+
+	protected <T> T put(Class<T> resultClass, T value, Table table) throws SQLException {
+		try (Connection connection = cpds.getConnection()) {
+			return getContext(connection)
+					.insertInto(table)
+					.values(value)
+					.returning()
+					.fetchOne()
+					.into(resultClass);
+		}
+	}
+
+	protected <R extends Record, T> List<T> putAll(Class<T> resultClass, Class<R> recordClass, Collection<T> values,
+			Table<R> table) throws SQLException {
+		try (Connection connection = cpds.getConnection()) {
+			return getContext(connection)
+					.insertInto(table)
+					.values(values)
+					.returning()
+					.fetch()
+					.into(resultClass);
+		}
 	}
 
 	@Override

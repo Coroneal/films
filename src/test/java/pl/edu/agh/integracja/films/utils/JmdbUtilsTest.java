@@ -2,10 +2,10 @@ package pl.edu.agh.integracja.films.utils;
 
 import static org.junit.Assert.*;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Test;
 
 import pl.edu.agh.integracja.films.jmdb.db.tables.pojos.Movies;
-import pl.edu.agh.integracja.films.utils.JmdbUtils;
 
 public class JmdbUtilsTest {
 
@@ -21,5 +21,13 @@ public class JmdbUtilsTest {
 	private String getTitle(String title) {
 		Movies movies = new Movies(null, title, null, null);
 		return JmdbUtils.getTitle(movies);
+	}
+
+	@Test
+	public void testGetFirstLastName() throws Exception {
+		assertEquals(Pair.of("", ""), JmdbUtils.getFirstLastName(""));
+		assertEquals(Pair.of("", "Travolta"), JmdbUtils.getFirstLastName("Travolta"));
+		assertEquals(Pair.of("John", "Travolta"), JmdbUtils.getFirstLastName("Travolta, John"));
+		assertEquals(Pair.of("John (I)", "Travolta"), JmdbUtils.getFirstLastName("Travolta, John (I)"));
 	}
 }

@@ -6,6 +6,8 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import pl.edu.agh.integracja.films.films.FilmsService;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.Actor;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.ActorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Genre;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Movie;
 import pl.edu.agh.integracja.films.jmdb.JmdbService;
@@ -33,12 +35,18 @@ public class Main {
         Map<String, Genre> genres = initGenres();
         tmdbService.init();
 
-        List<Movies> movies = jmdbService.getMovies(1500);
-        for (Movies movie : movies) {
-            String title = JmdbUtils.getTitle(movie);
+		List<Movies> movies = jmdbService.getMovies(1500);
+		for (Movies jmdbMovie : movies) {
+			String title = JmdbUtils.getTitle(jmdbMovie);
 
-            Movie tmdbMovie = tmdbService.getMovie(title, movie.getYear());
-        }
-    }
+			Movie movie = tmdbService.getMovie(title, jmdbMovie.getYear());
+			movie = filmsService.putMovie(movie);
+
+			Map<Actor, ActorMovie> actorsMap = jmdbService.getActors(movie.getId());
+			List<Actor> actors = filmsService.putActors(actorsMap.keySet());
+			for (Actor actor : actors) {
+			}
+		}
+	}
 
 }

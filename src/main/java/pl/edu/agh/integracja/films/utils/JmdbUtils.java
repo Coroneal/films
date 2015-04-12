@@ -3,6 +3,8 @@ package pl.edu.agh.integracja.films.utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import pl.edu.agh.integracja.films.jmdb.db.tables.pojos.Movies;
 
 public class JmdbUtils {
@@ -15,6 +17,17 @@ public class JmdbUtils {
 			return matcher.group(1);
 		} else {
 			return movies.getTitle();
+		}
+	}
+
+	public static Pair<String, String> getFirstLastName(String name) {
+		String[] split = name.split(",");
+		if (split.length == 1) {
+			return Pair.of("", split[0].trim());
+		} else if (split.length > 1) {
+			return Pair.of(split[1].trim(), split[0].trim());
+		} else {
+			return Pair.of("", "");
 		}
 	}
 
