@@ -16,12 +16,21 @@ import pl.edu.agh.integracja.films.utils.JmdbUtils;
 public class Main {
 
 	public static void main(String[] args) throws SQLException {
-		JmdbService jmdbService = new JmdbService();
-		TheMovieDbService tmdbService = new TheMovieDbService();
-		FilmsService filmsService = new FilmsService();
+		new Main().main();
+	}
 
+	private JmdbService jmdbService = new JmdbService();
+	private TheMovieDbService tmdbService = new TheMovieDbService();
+	private FilmsService filmsService = new FilmsService();
+
+	private Map<String, Genre> initGenres() throws SQLException {
 		filmsService.insertGenres(tmdbService.getGenres());
-		Map<String, Genre> genres = FilmsUtils.genreMap(filmsService.getGenres());
+		return FilmsUtils.genreMap(filmsService.getGenres());
+	}
+
+	private void main() throws SQLException {
+		Map<String, Genre> genres = initGenres();
+		tmdbService.init();
 
 		List<Movies> movies = jmdbService.getMovies(1500);
 		for (Movies movie : movies) {
