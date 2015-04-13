@@ -5,10 +5,13 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
 import org.jooq.DSLContext;
+import org.jooq.InsertSetStep;
+import org.jooq.InsertValuesStepN;
 import org.jooq.Record;
 import org.jooq.SQLDialect;
 import org.jooq.Table;
@@ -36,26 +39,33 @@ public abstract class MySqlService implements Closeable {
 		return DSL.using(connection, SQLDialect.MYSQL);
 	}
 
-	protected <T> T put(Class<T> resultClass, T value, Table table) throws SQLException {
+	protected <T> T put(Class<T> resultClass, Object[] record, Table table) throws SQLException {
 		try (Connection connection = cpds.getConnection()) {
 			return getContext(connection)
 					.insertInto(table)
-					.values(value)
+					.values(record)
 					.returning()
 					.fetchOne()
 					.into(resultClass);
 		}
 	}
 
-	protected <R extends Record, T> List<T> putAll(Class<T> resultClass, Class<R> recordClass, Collection<T> values,
-			Table<R> table) throws SQLException {
+	protected <R extends Record, T> List<T> putAll(Class<T> resultClass, Collection<Object[]> records, Table<R> table)
+			throws SQLException {
 		try (Connection connection = cpds.getConnection()) {
-			return getContext(connection)
-					.insertInto(table)
-					.values(values)
-					.returning()
-					.fetch()
-					.into(resultClass);
+			InsertSetStep<R> insert = getContext(connection).insertInto(table);
+			InsertValuesStepN<R> insertStepN = null;
+			for (Object[] record : records) {
+				insertStepN = insert.values(record);
+			}
+			if (insertStepN != null) {
+				return insertStepN
+						.returning()
+						.fetch()
+						.into(resultClass);
+			} else {
+				return new ArrayList<>();
+			}
 		}
 	}
 

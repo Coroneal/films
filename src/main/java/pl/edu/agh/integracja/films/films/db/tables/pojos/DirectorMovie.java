@@ -19,8 +19,8 @@ public class DirectorMovie implements java.io.Serializable {
 	private static final long serialVersionUID = 340871901;
 
 	private final java.lang.Integer id;
-	private final java.lang.Integer movieId;
-	private final java.lang.Integer directorId;
+	private java.lang.Integer movieId;
+	private java.lang.Integer directorId;
 
 	public DirectorMovie(
 		java.lang.Integer id,
@@ -42,5 +42,13 @@ public class DirectorMovie implements java.io.Serializable {
 
 	public java.lang.Integer getDirectorId() {
 		return this.directorId;
+	}
+
+	public void setMovieId(Integer movieId) {
+		this.movieId = movieId;
+	}
+
+	public void setDirectorId(Integer directorId) {
+		this.directorId = directorId;
 	}
 }

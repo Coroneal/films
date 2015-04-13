@@ -1,8 +1,10 @@
 package pl.edu.agh.integracja.films.jmdb;
 
 import static pl.edu.agh.integracja.films.jmdb.db.tables.Actors.*;
+import static pl.edu.agh.integracja.films.jmdb.db.tables.Directors.*;
 import static pl.edu.agh.integracja.films.jmdb.db.tables.Movies.*;
 import static pl.edu.agh.integracja.films.jmdb.db.tables.Movies2actors.*;
+import static pl.edu.agh.integracja.films.jmdb.db.tables.Movies2directors.*;
 import static pl.edu.agh.integracja.films.jmdb.db.tables.Ratings.*;
 
 import java.sql.Connection;
@@ -17,6 +19,8 @@ import org.jooq.types.UInteger;
 
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Actor;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.ActorMovie;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.Director;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.DirectorMovie;
 import pl.edu.agh.integracja.films.jmdb.db.tables.pojos.Movies;
 import pl.edu.agh.integracja.films.utils.JmdbUtils;
 import pl.edu.agh.integracja.films.utils.MySqlService;
@@ -40,7 +44,7 @@ public class JmdbService extends MySqlService {
 		}
 	}
 
-	public Map<Actor, ActorMovie> getActors(int movieId) throws SQLException {
+	public Map<Long, Pair<Actor, ActorMovie>> getActors(long movieId) throws SQLException {
 		try (Connection connection = cpds.getConnection()) {
 			return getContext(connection)
 					.selectFrom(ACTORS
@@ -50,8 +54,8 @@ public class JmdbService extends MySqlService {
 					.fetch()
 					.stream()
 					.collect(Collectors.toMap(
-							this::recordToActor,
-							this::recordToActorMovie
+							record -> record.getValue(ACTORS.ACTORID).longValue(),
+							record -> Pair.of(recordToActor(record), recordToActorMovie(record))
 					));
 		}
 	}
@@ -74,6 +78,33 @@ public class JmdbService extends MySqlService {
 				null,
 				record.getValue(MOVIES2ACTORS.AS_CHARACTER),
 				null
+		);
+	}
+
+	public Map<Long, Pair<Director, DirectorMovie>> getDirectors(long movieId) throws SQLException {
+		try (Connection connection = cpds.getConnection()) {
+			return getContext(connection)
+					.selectDistinct(DIRECTORS.fields())
+					.from(DIRECTORS
+									.join(MOVIES2DIRECTORS)
+									.on(DIRECTORS.DIRECTORID.eq(MOVIES2DIRECTORS.DIRECTORID))
+					).where(MOVIES2DIRECTORS.MOVIEID.equal(UInteger.valueOf(movieId)))
+					.fetch()
+					.stream()
+					.collect(Collectors.toMap(
+							record -> record.getValue(DIRECTORS.DIRECTORID).longValue(),
+							record -> Pair.of(recordToDirector(record), new DirectorMovie(null, null, null))
+					));
+		}
+	}
+
+	private Director recordToDirector(Record record) {
+		Pair<String, String> name = JmdbUtils.getFirstLastName(record.getValue(DIRECTORS.NAME));
+		return new Director(
+				null,
+				name.getLeft(),
+				name.getRight(),
+				record.getValue(DIRECTORS.DIRECTORID).longValue()
 		);
 	}
 

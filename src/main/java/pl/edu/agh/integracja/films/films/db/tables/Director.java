@@ -16,7 +16,7 @@ package pl.edu.agh.integracja.films.films.db.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Director extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord> {
 
-	private static final long serialVersionUID = 951975425;
+	private static final long serialVersionUID = -1280140581;
 
 	/**
 	 * The reference instance of <code>films.Director</code>
@@ -71,6 +71,14 @@ public class Director extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.film
 
 	private Director(java.lang.String alias, org.jooq.Table<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, pl.edu.agh.integracja.films.films.db.Films.FILMS, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord, java.lang.Integer> getIdentity() {
+		return pl.edu.agh.integracja.films.films.db.Keys.IDENTITY_DIRECTOR;
 	}
 
 	/**

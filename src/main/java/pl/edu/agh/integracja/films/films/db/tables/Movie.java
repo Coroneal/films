@@ -16,7 +16,7 @@ package pl.edu.agh.integracja.films.films.db.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Movie extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord> {
 
-	private static final long serialVersionUID = -434084556;
+	private static final long serialVersionUID = -1303745470;
 
 	/**
 	 * The reference instance of <code>films.Movie</code>
@@ -106,6 +106,14 @@ public class Movie extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.f
 
 	private Movie(java.lang.String alias, org.jooq.Table<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, pl.edu.agh.integracja.films.films.db.Films.FILMS, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Integer> getIdentity() {
+		return pl.edu.agh.integracja.films.films.db.Keys.IDENTITY_MOVIE;
 	}
 
 	/**

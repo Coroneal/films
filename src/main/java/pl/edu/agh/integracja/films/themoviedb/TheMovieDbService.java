@@ -21,7 +21,7 @@ import pl.edu.agh.integracja.films.utils.FilmsUtils;
 public class TheMovieDbService {
 
     private static final String API_KEY = "630b83b95c5c4b50755c42155e49dd6e";
-    private static final String language = "en";
+    private static final String language = null;
     private static final SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     private TheMovieDbApi api;
 
@@ -53,8 +53,8 @@ public class TheMovieDbService {
         Integer page = null;
         Integer primaryReleaseYear = null;
         ResultList<MovieInfo> infoResultList = api.searchMovie(title, page, language, includeAdult, Integer.parseInt(year), primaryReleaseYear, SearchType.PHRASE);
-        if (infoResultList.getTotalResults() != 1) {
-            throw new MovieDbException(ApiExceptionType.MAPPING_FAILED, "empty or not unique result");
+        if (infoResultList.getTotalResults() == 0) {
+            throw new MovieDbException(ApiExceptionType.MAPPING_FAILED, "empty");
         }
         MovieInfo movieInfo = api.getMovieInfo(infoResultList.getResults().get(0).getId(), language);
         Date releaseDate = new Date(format.parse(movieInfo.getReleaseDate()).getTime());

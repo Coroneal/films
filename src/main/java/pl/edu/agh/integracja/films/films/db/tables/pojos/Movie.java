@@ -28,7 +28,7 @@ public class Movie implements java.io.Serializable {
 	private final java.lang.Integer voteCount;
 	private final java.lang.Double  voteAverage;
 	private final java.lang.Integer genreId;
-	private final java.lang.Long    jmdbid;
+	private java.lang.Long jmdbid;
 
 	public Movie(
 		java.lang.Integer id,
@@ -98,5 +98,9 @@ public class Movie implements java.io.Serializable {
 
 	public java.lang.Long getJmdbid() {
 		return this.jmdbid;
+	}
+
+	public void setJmdbid(Long jmdbid) {
+		this.jmdbid = jmdbid;
 	}
 }

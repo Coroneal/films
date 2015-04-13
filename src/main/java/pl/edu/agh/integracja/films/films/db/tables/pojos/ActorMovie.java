@@ -19,8 +19,8 @@ public class ActorMovie implements java.io.Serializable {
 	private static final long serialVersionUID = -1429438532;
 
 	private final java.lang.Integer id;
-	private final java.lang.Integer movieId;
-	private final java.lang.Integer actorId;
+	private java.lang.Integer movieId;
+	private java.lang.Integer actorId;
 	private final java.lang.String  role;
 	private final java.lang.Byte    mainRole;
 
@@ -56,5 +56,13 @@ public class ActorMovie implements java.io.Serializable {
 
 	public java.lang.Byte getMainRole() {
 		return this.mainRole;
+	}
+
+	public void setMovieId(Integer movieId) {
+		this.movieId = movieId;
+	}
+
+	public void setActorId(Integer actorId) {
+		this.actorId = actorId;
 	}
 }

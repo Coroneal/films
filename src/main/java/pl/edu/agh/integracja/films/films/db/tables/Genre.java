@@ -16,7 +16,7 @@ package pl.edu.agh.integracja.films.films.db.tables;
 @java.lang.SuppressWarnings({ "all", "unchecked", "rawtypes" })
 public class Genre extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord> {
 
-	private static final long serialVersionUID = -1036474249;
+	private static final long serialVersionUID = -317218517;
 
 	/**
 	 * The reference instance of <code>films.Genre</code>
@@ -61,6 +61,14 @@ public class Genre extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.f
 
 	private Genre(java.lang.String alias, org.jooq.Table<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord> aliased, org.jooq.Field<?>[] parameters) {
 		super(alias, pl.edu.agh.integracja.films.films.db.Films.FILMS, aliased, parameters, "");
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord, java.lang.Integer> getIdentity() {
+		return pl.edu.agh.integracja.films.films.db.Keys.IDENTITY_GENRE;
 	}
 
 	/**
