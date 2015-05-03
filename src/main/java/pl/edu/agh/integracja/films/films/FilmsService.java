@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.ListUtils;
 
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Actor;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.ActorMovie;
@@ -44,7 +47,16 @@ public class FilmsService extends MySqlService {
 	}
 
 	public List<Actor> putActors(Collection<Actor> actors) throws SQLException {
-		return putAll(Actor.class, FilmsUtils.createActorValues(actors), ACTOR);
+		try (Connection connection = cpds.getConnection()) {
+			List<Actor> existingActors = getContext(connection)
+					.selectFrom(ACTOR)
+					.where(ACTOR.JMDBID.in(actors.stream().map(Actor::getJmdbid).collect(Collectors.toList())))
+					.fetchInto(Actor.class);
+
+			actors.removeAll(existingActors);
+			List<Actor> newActors = putAll(Actor.class, FilmsUtils.createActorValues(actors), ACTOR);
+			return ListUtils.union(existingActors, newActors);
+		}
 	}
 
 	public List<ActorMovie> putActorMovies(Collection<ActorMovie> actorMovies) throws SQLException {
@@ -52,7 +64,16 @@ public class FilmsService extends MySqlService {
 	}
 
 	public List<Director> putDirectors(Collection<Director> directors) throws SQLException {
-		return putAll(Director.class, FilmsUtils.createDirectorValues(directors), DIRECTOR);
+		try (Connection connection = cpds.getConnection()) {
+			List<Director> existingDirectors = getContext(connection)
+					.selectFrom(DIRECTOR)
+					.where(DIRECTOR.JMDBID.in(directors.stream().map(Director::getJmdbid).collect(Collectors.toList())))
+					.fetchInto(Director.class);
+
+			directors.removeAll(existingDirectors);
+			List<Director> newDirectors = putAll(Director.class, FilmsUtils.createDirectorValues(directors), DIRECTOR);
+			return ListUtils.union(existingDirectors, newDirectors);
+		}
 	}
 
 	public List<DirectorMovie> putDirectorMovies(Collection<DirectorMovie> directorMovies) throws SQLException {

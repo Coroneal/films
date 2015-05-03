@@ -50,4 +50,27 @@ public class Director implements java.io.Serializable {
 	public java.lang.Long getJmdbid() {
 		return this.jmdbid;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Director director = (Director) o;
+
+		if (jmdbid != null ? !jmdbid.equals(director.jmdbid) : director.jmdbid != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return jmdbid != null ? jmdbid.hashCode() : 0;
+	}
 }

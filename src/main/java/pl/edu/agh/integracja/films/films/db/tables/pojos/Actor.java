@@ -57,4 +57,27 @@ public class Actor implements java.io.Serializable {
 	public java.lang.Long getJmdbid() {
 		return this.jmdbid;
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+
+		Actor actor = (Actor) o;
+
+		if (jmdbid != null ? !jmdbid.equals(actor.jmdbid) : actor.jmdbid != null) {
+			return false;
+		}
+
+		return true;
+	}
+
+	@Override
+	public int hashCode() {
+		return jmdbid != null ? jmdbid.hashCode() : 0;
+	}
 }
