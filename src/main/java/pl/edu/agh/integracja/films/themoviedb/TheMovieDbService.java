@@ -1,7 +1,6 @@
 package pl.edu.agh.integracja.films.themoviedb;
 
 import java.sql.Date;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.yamj.api.common.exception.ApiExceptionType;
 
 import com.omertron.themoviedbapi.MovieDbException;
@@ -18,10 +17,8 @@ import com.omertron.themoviedbapi.enumeration.SearchType;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 import com.omertron.themoviedbapi.results.ResultList;
 
-import pl.edu.agh.integracja.films.films.FilmsService;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Genre;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Movie;
-import pl.edu.agh.integracja.films.utils.FilmsUtils;
 
 public class TheMovieDbService {
 
@@ -40,9 +37,8 @@ public class TheMovieDbService {
 		}
 	}
 
-	public void init() throws SQLException {
-		FilmsService filmsService = new FilmsService();
-		genres = FilmsUtils.genreMap(filmsService.getGenres());
+	public void init(Map<String, Genre> genres) {
+		this.genres = genres;
 	}
 
 	public List<Genre> getGenres() throws MovieDbException {
@@ -53,7 +49,7 @@ public class TheMovieDbService {
 		return genres;
 	}
 
-	public Pair<Movie, List<Integer>> getMovie(String title, String year) throws MovieDbException, ParseException {
+	public Triple<Movie, MovieInfo, List<Integer>> getMovie(String title, String year) throws MovieDbException, ParseException {
 		Boolean includeAdult = true;
 		Integer page = null;
 		Integer primaryReleaseYear = null;
@@ -62,13 +58,14 @@ public class TheMovieDbService {
 		if (infoResultList.getTotalResults() == 0) {
 			throw new MovieDbException(ApiExceptionType.MAPPING_FAILED, "empty");
 		}
-		MovieInfo movieInfo = api.getMovieInfo(infoResultList.getResults().get(0).getId(), language);
+		MovieInfo movieInfo = api.getMovieInfo(infoResultList.getResults().get(0).getId(), language, "credits");
 		Date releaseDate = new Date(format.parse(movieInfo.getReleaseDate()).getTime());
 		Double popularity = (double) movieInfo.getPopularity();
 		Double voteAverage = (double) movieInfo.getVoteAverage();
-		Movie movie = new Movie(null, movieInfo.getTitle(), movieInfo.getOriginalLanguage(), releaseDate, movieInfo.getBudget()
-				, movieInfo.getRevenue(), popularity, movieInfo.getVoteCount(), voteAverage, null);
-		return Pair.of(movie, extractGenreIds(movieInfo.getGenres()));
+		Movie movie = new Movie(null, movieInfo.getTitle(), movieInfo.getOriginalLanguage(), releaseDate, movieInfo.getBudget(),
+				movieInfo.getRevenue(), popularity, movieInfo.getVoteCount(), voteAverage, null);
+
+		return Triple.of(movie, movieInfo, extractGenreIds(movieInfo.getGenres()));
 
 	}
 
@@ -77,7 +74,8 @@ public class TheMovieDbService {
 			return new ArrayList<>();
 		}
 		return genresList.stream()
-				.map(genre -> genres.get(genre.getName()).getId())
+				.filter(genre -> genres.containsKey(genre.getName().toLowerCase()))
+				.map(genre -> genres.get(genre.getName().toLowerCase()).getId())
 				.collect(Collectors.toList());
 	}
 

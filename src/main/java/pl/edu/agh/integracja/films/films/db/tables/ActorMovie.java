@@ -52,9 +52,9 @@ public class ActorMovie extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.fi
 	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.ActorMovieRecord, java.lang.String> ROLE = createField("role", org.jooq.impl.SQLDataType.VARCHAR.length(1000).nullable(false), this, "");
 
 	/**
-	 * The column <code>films.Actor_Movie.main_role</code>.
+	 * The column <code>films.Actor_Movie.rank</code>.
 	 */
-	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.ActorMovieRecord, java.lang.Byte> MAIN_ROLE = createField("main_role", org.jooq.impl.SQLDataType.TINYINT, this, "");
+	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.ActorMovieRecord, java.lang.Integer> RANK = createField("rank", org.jooq.impl.SQLDataType.INTEGER, this, "");
 
 	/**
 	 * Create a <code>films.Actor_Movie</code> table reference

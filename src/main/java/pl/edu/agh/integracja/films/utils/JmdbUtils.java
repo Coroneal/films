@@ -21,6 +21,7 @@ public class JmdbUtils {
 	}
 
 	public static Pair<String, String> getFirstLastName(String name) {
+		name = name.replaceAll(" \\(.+\\)", "");
 		String[] split = name.split(",");
 		if (split.length == 1) {
 			return Pair.of("", split[0].trim());

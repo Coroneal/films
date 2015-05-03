@@ -3,15 +3,20 @@ package pl.edu.agh.integracja.films;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.lang3.tuple.Triple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.omertron.themoviedbapi.MovieDbException;
+import com.omertron.themoviedbapi.model.credits.MediaCredit;
+import com.omertron.themoviedbapi.model.credits.MediaCreditCast;
+import com.omertron.themoviedbapi.model.movie.MovieInfo;
 
 import pl.edu.agh.integracja.films.films.FilmsService;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Actor;
@@ -33,7 +38,7 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		long time = System.currentTimeMillis();
-		new Main().main(1500);
+		new Main().main(100000);
 		time = (System.currentTimeMillis() - time) / 1000;
 		System.out.println(String.format("Finished. Time elapsed: %sm %ss", time / 60, time % 60));
 	}
@@ -47,10 +52,10 @@ public class Main {
 		return FilmsUtils.genreMap(filmsService.getGenres());
 	}
 
-	private Movie putMovie(Movies jmdbMovie) throws MovieDbException, ParseException, SQLException {
+	private Pair<Movie, MovieInfo> putMovie(Movies jmdbMovie) throws MovieDbException, ParseException, SQLException {
 		String title = JmdbUtils.getTitle(jmdbMovie);
 
-		Pair<Movie, List<Integer>> movieAndGenes = tmdbService.getMovie(title, jmdbMovie.getYear());
+		Triple<Movie, MovieInfo, List<Integer>> movieAndGenes = tmdbService.getMovie(title, jmdbMovie.getYear());
 		Movie movie = movieAndGenes.getLeft();
 
 		movie.setJmdbid(jmdbMovie.getMovieid().longValue());
@@ -62,18 +67,28 @@ public class Main {
 				.collect(Collectors.toList());
 		filmsService.putGenreMovies(genreMovies);
 
-		return savedMovie;
+		return Pair.of(savedMovie, movieAndGenes.getMiddle());
 	}
 
-	private void putActors(Movie movie, Map<Long, Pair<Actor, ActorMovie>> actorsMap) throws SQLException {
+	private void putActors(Movie movie, MovieInfo movieInfo, Map<Long, Pair<Actor, ActorMovie>> actorsMap) throws SQLException {
 		List<Actor> actors = filmsService
 				.putActors(actorsMap.values().stream().map(Pair::getLeft).collect(Collectors.toList()));
+
+		Map<String, Integer> ranks = new HashMap<>();
+		for (MediaCreditCast cast : movieInfo.getCast()) {
+			if(!ranks.containsKey(cast.getName())){
+				ranks.put(cast.getName(), cast.getOrder());
+			}
+		}
 
 		List<ActorMovie> actorMovieList = new ArrayList<>();
 		for (Actor actor : actors) {
 			ActorMovie actorMovie = actorsMap.get(actor.getJmdbid()).getRight();
 			actorMovie.setActorId(actor.getId());
 			actorMovie.setMovieId(movie.getId());
+
+			String name = actor.getName() + " " + actor.getSurname();
+			actorMovie.setRank(ranks.containsKey(name) ? ranks.get(name) : 999);
 			actorMovieList.add(actorMovie);
 		}
 		filmsService.putActorMovies(actorMovieList);
@@ -94,20 +109,23 @@ public class Main {
 	}
 
 	private void main(int minNumberOfVotes) throws MovieDbException, SQLException {
-		initGenres();
-		tmdbService.init();
+		Map<String, Genre> genres = initGenres();
+		tmdbService.init(genres);
 
 		List<Movies> movies = jmdbService.getMovies(minNumberOfVotes);
 		for (Movies jmdbMovie : movies) {
 			Movie movie;
+			MovieInfo movieInfo;
 			try {
-				movie = putMovie(jmdbMovie);
+				Pair<Movie, MovieInfo> movieMovieInfoPair = putMovie(jmdbMovie);
+				movie = movieMovieInfoPair.getLeft();
+				movieInfo = movieMovieInfoPair.getRight();
 			} catch (MovieDbException | ParseException e) {
 				continue;
 			}
 
 			Map<Long, Pair<Actor, ActorMovie>> actorsMap = jmdbService.getActors(movie.getJmdbid().intValue());
-			putActors(movie, actorsMap);
+			putActors(movie, movieInfo, actorsMap);
 
 			Map<Long, Pair<Director, DirectorMovie>> directorsMap = jmdbService.getDirectors(movie.getJmdbid().intValue());
 			putDirectors(movie, directorsMap);

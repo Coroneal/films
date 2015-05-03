@@ -18,7 +18,7 @@ public class FilmsUtils {
 	public static Map<String, Genre> genreMap(List<Genre> genres) {
 		return genres.stream()
 				.collect(Collectors.toMap(
-						Genre::getName,
+						genre -> genre.getName().toLowerCase(),
 						genre -> genre
 				));
 	}
@@ -112,7 +112,7 @@ public class FilmsUtils {
 				actorMovie.getMovieId(),
 				actorMovie.getActorId(),
 				actorMovie.getRole(),
-				actorMovie.getMainRole()
+				actorMovie.getRank()
 		};
 	}
 

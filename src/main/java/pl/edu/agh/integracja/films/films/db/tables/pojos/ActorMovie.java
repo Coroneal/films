@@ -22,20 +22,20 @@ public class ActorMovie implements java.io.Serializable {
 	private java.lang.Integer movieId;
 	private java.lang.Integer actorId;
 	private final java.lang.String  role;
-	private final java.lang.Byte    mainRole;
+	private java.lang.Integer rank;
 
 	public ActorMovie(
 		java.lang.Integer id,
 		java.lang.Integer movieId,
 		java.lang.Integer actorId,
 		java.lang.String  role,
-		java.lang.Byte    mainRole
+		java.lang.Integer rank
 	) {
 		this.id = id;
 		this.movieId = movieId;
 		this.actorId = actorId;
 		this.role = role;
-		this.mainRole = mainRole;
+		this.rank = rank;
 	}
 
 	public java.lang.Integer getId() {
@@ -54,8 +54,8 @@ public class ActorMovie implements java.io.Serializable {
 		return this.role;
 	}
 
-	public java.lang.Byte getMainRole() {
-		return this.mainRole;
+	public java.lang.Integer getRank() {
+		return this.rank;
 	}
 
 	public void setMovieId(Integer movieId) {
@@ -64,5 +64,9 @@ public class ActorMovie implements java.io.Serializable {
 
 	public void setActorId(Integer actorId) {
 		this.actorId = actorId;
+	}
+
+	public void setRank(Integer rank) {
+		this.rank = rank;
 	}
 }

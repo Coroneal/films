@@ -28,6 +28,7 @@ public class JmdbUtilsTest {
 		assertEquals(Pair.of("", ""), JmdbUtils.getFirstLastName(""));
 		assertEquals(Pair.of("", "Travolta"), JmdbUtils.getFirstLastName("Travolta"));
 		assertEquals(Pair.of("John", "Travolta"), JmdbUtils.getFirstLastName("Travolta, John"));
-		assertEquals(Pair.of("John (I)", "Travolta"), JmdbUtils.getFirstLastName("Travolta, John (I)"));
+		assertEquals(Pair.of("John", "Travolta"), JmdbUtils.getFirstLastName("Travolta, John (I)"));
+		assertEquals(Pair.of("John", "Travolta"), JmdbUtils.getFirstLastName("Travolta, John (II)"));
 	}
 }
