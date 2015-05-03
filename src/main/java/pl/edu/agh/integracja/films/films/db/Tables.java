@@ -42,6 +42,11 @@ public class Tables {
 	public static final pl.edu.agh.integracja.films.films.db.tables.Genre GENRE = pl.edu.agh.integracja.films.films.db.tables.Genre.GENRE;
 
 	/**
+	 * The table films.Genre_Movie
+	 */
+	public static final pl.edu.agh.integracja.films.films.db.tables.GenreMovie GENRE_MOVIE = pl.edu.agh.integracja.films.films.db.tables.GenreMovie.GENRE_MOVIE;
+
+	/**
 	 * The table films.Movie
 	 */
 	public static final pl.edu.agh.integracja.films.films.db.tables.Movie MOVIE = pl.edu.agh.integracja.films.films.db.tables.Movie.MOVIE;

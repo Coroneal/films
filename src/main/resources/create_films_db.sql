@@ -52,6 +52,14 @@ CREATE TABLE Genre (
     CONSTRAINT Genre_pk PRIMARY KEY (id)
 );
 
+-- Table Genre_Movie
+CREATE TABLE Genre_Movie (
+    id int    NOT NULL AUTO_INCREMENT,
+    movie_id int    NOT NULL ,
+    genre_id int    NOT NULL ,
+    CONSTRAINT Genre_Movie_pk PRIMARY KEY (id)
+);
+
 -- Table Movie
 CREATE TABLE Movie (
     id int    NOT NULL AUTO_INCREMENT,
@@ -63,7 +71,6 @@ CREATE TABLE Movie (
     popularity double    NOT NULL ,
     vote_count int    NOT NULL ,
     vote_average double    NOT NULL ,
-    genre_id int    NOT NULL ,
     jmdbid bigint    NOT NULL ,
     CONSTRAINT Movie_pk PRIMARY KEY (id)
 );

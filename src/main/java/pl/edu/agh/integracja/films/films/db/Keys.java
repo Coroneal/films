@@ -26,6 +26,7 @@ public class Keys {
 	public static final org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord, java.lang.Integer> IDENTITY_DIRECTOR = Identities0.IDENTITY_DIRECTOR;
 	public static final org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.DirectorMovieRecord, java.lang.Integer> IDENTITY_DIRECTOR_MOVIE = Identities0.IDENTITY_DIRECTOR_MOVIE;
 	public static final org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord, java.lang.Integer> IDENTITY_GENRE = Identities0.IDENTITY_GENRE;
+	public static final org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.GenreMovieRecord, java.lang.Integer> IDENTITY_GENRE_MOVIE = Identities0.IDENTITY_GENRE_MOVIE;
 	public static final org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Integer> IDENTITY_MOVIE = Identities0.IDENTITY_MOVIE;
 
 	// -------------------------------------------------------------------------
@@ -37,6 +38,7 @@ public class Keys {
 	public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord> KEY_DIRECTOR_PRIMARY = UniqueKeys0.KEY_DIRECTOR_PRIMARY;
 	public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.DirectorMovieRecord> KEY_DIRECTOR_MOVIE_PRIMARY = UniqueKeys0.KEY_DIRECTOR_MOVIE_PRIMARY;
 	public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord> KEY_GENRE_PRIMARY = UniqueKeys0.KEY_GENRE_PRIMARY;
+	public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.GenreMovieRecord> KEY_GENRE_MOVIE_PRIMARY = UniqueKeys0.KEY_GENRE_MOVIE_PRIMARY;
 	public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord> KEY_MOVIE_PRIMARY = UniqueKeys0.KEY_MOVIE_PRIMARY;
 
 	// -------------------------------------------------------------------------
@@ -54,6 +56,7 @@ public class Keys {
 		public static org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord, java.lang.Integer> IDENTITY_DIRECTOR = createIdentity(pl.edu.agh.integracja.films.films.db.tables.Director.DIRECTOR, pl.edu.agh.integracja.films.films.db.tables.Director.DIRECTOR.ID);
 		public static org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.DirectorMovieRecord, java.lang.Integer> IDENTITY_DIRECTOR_MOVIE = createIdentity(pl.edu.agh.integracja.films.films.db.tables.DirectorMovie.DIRECTOR_MOVIE, pl.edu.agh.integracja.films.films.db.tables.DirectorMovie.DIRECTOR_MOVIE.ID);
 		public static org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord, java.lang.Integer> IDENTITY_GENRE = createIdentity(pl.edu.agh.integracja.films.films.db.tables.Genre.GENRE, pl.edu.agh.integracja.films.films.db.tables.Genre.GENRE.ID);
+		public static org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.GenreMovieRecord, java.lang.Integer> IDENTITY_GENRE_MOVIE = createIdentity(pl.edu.agh.integracja.films.films.db.tables.GenreMovie.GENRE_MOVIE, pl.edu.agh.integracja.films.films.db.tables.GenreMovie.GENRE_MOVIE.ID);
 		public static org.jooq.Identity<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Integer> IDENTITY_MOVIE = createIdentity(pl.edu.agh.integracja.films.films.db.tables.Movie.MOVIE, pl.edu.agh.integracja.films.films.db.tables.Movie.MOVIE.ID);
 	}
 
@@ -63,6 +66,7 @@ public class Keys {
 		public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.DirectorRecord> KEY_DIRECTOR_PRIMARY = createUniqueKey(pl.edu.agh.integracja.films.films.db.tables.Director.DIRECTOR, pl.edu.agh.integracja.films.films.db.tables.Director.DIRECTOR.ID);
 		public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.DirectorMovieRecord> KEY_DIRECTOR_MOVIE_PRIMARY = createUniqueKey(pl.edu.agh.integracja.films.films.db.tables.DirectorMovie.DIRECTOR_MOVIE, pl.edu.agh.integracja.films.films.db.tables.DirectorMovie.DIRECTOR_MOVIE.ID);
 		public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.GenreRecord> KEY_GENRE_PRIMARY = createUniqueKey(pl.edu.agh.integracja.films.films.db.tables.Genre.GENRE, pl.edu.agh.integracja.films.films.db.tables.Genre.GENRE.ID);
+		public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.GenreMovieRecord> KEY_GENRE_MOVIE_PRIMARY = createUniqueKey(pl.edu.agh.integracja.films.films.db.tables.GenreMovie.GENRE_MOVIE, pl.edu.agh.integracja.films.films.db.tables.GenreMovie.GENRE_MOVIE.ID);
 		public static final org.jooq.UniqueKey<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord> KEY_MOVIE_PRIMARY = createUniqueKey(pl.edu.agh.integracja.films.films.db.tables.Movie.MOVIE, pl.edu.agh.integracja.films.films.db.tables.Movie.MOVIE.ID);
 	}
 }

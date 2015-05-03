@@ -27,7 +27,6 @@ public class Movie implements java.io.Serializable {
 	private final java.lang.Double  popularity;
 	private final java.lang.Integer voteCount;
 	private final java.lang.Double  voteAverage;
-	private final java.lang.Integer genreId;
 	private java.lang.Long jmdbid;
 
 	public Movie(
@@ -40,7 +39,6 @@ public class Movie implements java.io.Serializable {
 		java.lang.Double  popularity,
 		java.lang.Integer voteCount,
 		java.lang.Double  voteAverage,
-		java.lang.Integer genreId,
 		java.lang.Long    jmdbid
 	) {
 		this.id = id;
@@ -52,7 +50,6 @@ public class Movie implements java.io.Serializable {
 		this.popularity = popularity;
 		this.voteCount = voteCount;
 		this.voteAverage = voteAverage;
-		this.genreId = genreId;
 		this.jmdbid = jmdbid;
 	}
 
@@ -90,10 +87,6 @@ public class Movie implements java.io.Serializable {
 
 	public java.lang.Double getVoteAverage() {
 		return this.voteAverage;
-	}
-
-	public java.lang.Integer getGenreId() {
-		return this.genreId;
 	}
 
 	public java.lang.Long getJmdbid() {

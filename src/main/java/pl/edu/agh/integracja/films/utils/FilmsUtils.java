@@ -10,6 +10,7 @@ import pl.edu.agh.integracja.films.films.db.tables.pojos.ActorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Director;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.DirectorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Genre;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.GenreMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Movie;
 
 public class FilmsUtils {
@@ -58,6 +59,12 @@ public class FilmsUtils {
 				.collect(Collectors.toList());
 	}
 
+	public static List<Object[]> createGenreMovieValues(Collection<GenreMovie> genreMovies) {
+		return genreMovies.stream()
+				.map(FilmsUtils::createValues)
+				.collect(Collectors.toList());
+	}
+
 	public static Object[] createValues(Movie movie) {
 		return new Object[] {
 				movie.getId(),
@@ -69,7 +76,6 @@ public class FilmsUtils {
 				movie.getPopularity(),
 				movie.getVoteCount(),
 				movie.getVoteAverage(),
-				movie.getGenreId(),
 				movie.getJmdbid()
 		};
 	}
@@ -115,6 +121,14 @@ public class FilmsUtils {
 				directorMovie.getId(),
 				directorMovie.getMovieId(),
 				directorMovie.getDirectorId()
+		};
+	}
+
+	public static Object[] createValues(GenreMovie genreMovie) {
+		return new Object[] {
+				genreMovie.getId(),
+				genreMovie.getMovieId(),
+				genreMovie.getGenreId()
 		};
 	}
 }

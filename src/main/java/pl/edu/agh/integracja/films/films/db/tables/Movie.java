@@ -77,11 +77,6 @@ public class Movie extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.f
 	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Double> VOTE_AVERAGE = createField("vote_average", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
 	/**
-	 * The column <code>films.Movie.genre_id</code>.
-	 */
-	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Integer> GENRE_ID = createField("genre_id", org.jooq.impl.SQLDataType.INTEGER.nullable(false), this, "");
-
-	/**
 	 * The column <code>films.Movie.jmdbid</code>.
 	 */
 	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Long> JMDBID = createField("jmdbid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");

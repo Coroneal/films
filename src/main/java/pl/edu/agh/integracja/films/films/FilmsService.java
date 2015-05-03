@@ -5,6 +5,7 @@ import static pl.edu.agh.integracja.films.films.db.tables.ActorMovie.*;
 import static pl.edu.agh.integracja.films.films.db.tables.Director.*;
 import static pl.edu.agh.integracja.films.films.db.tables.DirectorMovie.*;
 import static pl.edu.agh.integracja.films.films.db.tables.Genre.*;
+import static pl.edu.agh.integracja.films.films.db.tables.GenreMovie.*;
 import static pl.edu.agh.integracja.films.films.db.tables.Movie.*;
 
 import java.sql.Connection;
@@ -20,6 +21,7 @@ import pl.edu.agh.integracja.films.films.db.tables.pojos.ActorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Director;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.DirectorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Genre;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.GenreMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Movie;
 import pl.edu.agh.integracja.films.utils.FilmsUtils;
 import pl.edu.agh.integracja.films.utils.MySqlService;
@@ -78,6 +80,10 @@ public class FilmsService extends MySqlService {
 
 	public List<DirectorMovie> putDirectorMovies(Collection<DirectorMovie> directorMovies) throws SQLException {
 		return putAll(DirectorMovie.class, FilmsUtils.createDirectorMovieValues(directorMovies), DIRECTOR_MOVIE);
+	}
+
+	public List<GenreMovie> putGenreMovies(Collection<GenreMovie> genreMovies) throws SQLException {
+		return putAll(GenreMovie.class, FilmsUtils.createGenreMovieValues(genreMovies), GENRE_MOVIE);
 	}
 
 }

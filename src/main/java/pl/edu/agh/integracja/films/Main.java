@@ -19,6 +19,7 @@ import pl.edu.agh.integracja.films.films.db.tables.pojos.ActorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Director;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.DirectorMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Genre;
+import pl.edu.agh.integracja.films.films.db.tables.pojos.GenreMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Movie;
 import pl.edu.agh.integracja.films.jmdb.JmdbService;
 import pl.edu.agh.integracja.films.jmdb.db.tables.pojos.Movies;
@@ -49,9 +50,19 @@ public class Main {
 	private Movie putMovie(Movies jmdbMovie) throws MovieDbException, ParseException, SQLException {
 		String title = JmdbUtils.getTitle(jmdbMovie);
 
-		Movie movie = tmdbService.getMovie(title, jmdbMovie.getYear());
+		Pair<Movie, List<Integer>> movieAndGenes = tmdbService.getMovie(title, jmdbMovie.getYear());
+		Movie movie = movieAndGenes.getLeft();
+
 		movie.setJmdbid(jmdbMovie.getMovieid().longValue());
-		return filmsService.putMovie(movie);
+		Movie savedMovie = filmsService.putMovie(movie);
+
+		List<GenreMovie> genreMovies = movieAndGenes.getRight()
+				.stream()
+				.map(genreId -> new GenreMovie(null, savedMovie.getId(), genreId))
+				.collect(Collectors.toList());
+		filmsService.putGenreMovies(genreMovies);
+
+		return savedMovie;
 	}
 
 	private void putActors(Movie movie, Map<Long, Pair<Actor, ActorMovie>> actorsMap) throws SQLException {

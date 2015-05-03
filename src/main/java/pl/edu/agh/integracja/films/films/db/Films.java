@@ -44,6 +44,7 @@ public class Films extends org.jooq.impl.SchemaImpl {
 			pl.edu.agh.integracja.films.films.db.tables.Director.DIRECTOR,
 			pl.edu.agh.integracja.films.films.db.tables.DirectorMovie.DIRECTOR_MOVIE,
 			pl.edu.agh.integracja.films.films.db.tables.Genre.GENRE,
+			pl.edu.agh.integracja.films.films.db.tables.GenreMovie.GENRE_MOVIE,
 			pl.edu.agh.integracja.films.films.db.tables.Movie.MOVIE);
 	}
 }
