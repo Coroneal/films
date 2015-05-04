@@ -14,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.omertron.themoviedbapi.MovieDbException;
-import com.omertron.themoviedbapi.model.credits.MediaCredit;
 import com.omertron.themoviedbapi.model.credits.MediaCreditCast;
 import com.omertron.themoviedbapi.model.movie.MovieInfo;
 
@@ -28,6 +27,7 @@ import pl.edu.agh.integracja.films.films.db.tables.pojos.GenreMovie;
 import pl.edu.agh.integracja.films.films.db.tables.pojos.Movie;
 import pl.edu.agh.integracja.films.jmdb.JmdbService;
 import pl.edu.agh.integracja.films.jmdb.db.tables.pojos.Movies;
+import pl.edu.agh.integracja.films.themoviedb.OmdbService;
 import pl.edu.agh.integracja.films.themoviedb.TheMovieDbService;
 import pl.edu.agh.integracja.films.utils.FilmsUtils;
 import pl.edu.agh.integracja.films.utils.JmdbUtils;
@@ -38,13 +38,14 @@ public class Main {
 
 	public static void main(String[] args) throws Exception {
 		long time = System.currentTimeMillis();
-		new Main().main(100000);
+		new Main().main(1500);
 		time = (System.currentTimeMillis() - time) / 1000;
 		System.out.println(String.format("Finished. Time elapsed: %sm %ss", time / 60, time % 60));
 	}
 
 	private JmdbService jmdbService = new JmdbService();
 	private TheMovieDbService tmdbService = new TheMovieDbService();
+	private OmdbService omdbService = new OmdbService();
 	private FilmsService filmsService = new FilmsService();
 
 	private Map<String, Genre> initGenres() throws SQLException, MovieDbException {
@@ -59,6 +60,7 @@ public class Main {
 		Movie movie = movieAndGenes.getLeft();
 
 		movie.setJmdbid(jmdbMovie.getMovieid().longValue());
+		omdbService.setAdditionalInfo(movie);
 		Movie savedMovie = filmsService.putMovie(movie);
 
 		List<GenreMovie> genreMovies = movieAndGenes.getRight()
@@ -76,7 +78,7 @@ public class Main {
 
 		Map<String, Integer> ranks = new HashMap<>();
 		for (MediaCreditCast cast : movieInfo.getCast()) {
-			if(!ranks.containsKey(cast.getName())){
+			if (!ranks.containsKey(cast.getName())) {
 				ranks.put(cast.getName(), cast.getOrder());
 			}
 		}

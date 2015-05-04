@@ -77,6 +77,26 @@ public class Movie extends org.jooq.impl.TableImpl<pl.edu.agh.integracja.films.f
 	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Double> VOTE_AVERAGE = createField("vote_average", org.jooq.impl.SQLDataType.DOUBLE.nullable(false), this, "");
 
 	/**
+	 * The column <code>films.Movie.imdb_rating</code>.
+	 */
+	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Double> IMDB_RATING = createField("imdb_rating", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+	/**
+	 * The column <code>films.Movie.imdb_votes</code>.
+	 */
+	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Integer> IMDB_VOTES = createField("imdb_votes", org.jooq.impl.SQLDataType.INTEGER, this, "");
+
+	/**
+	 * The column <code>films.Movie.tomato_rating</code>.
+	 */
+	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Double> TOMATO_RATING = createField("tomato_rating", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+	/**
+	 * The column <code>films.Movie.tomato_user_rating</code>.
+	 */
+	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Double> TOMATO_USER_RATING = createField("tomato_user_rating", org.jooq.impl.SQLDataType.DOUBLE, this, "");
+
+	/**
 	 * The column <code>films.Movie.jmdbid</code>.
 	 */
 	public final org.jooq.TableField<pl.edu.agh.integracja.films.films.db.tables.records.MovieRecord, java.lang.Long> JMDBID = createField("jmdbid", org.jooq.impl.SQLDataType.BIGINT.nullable(false), this, "");

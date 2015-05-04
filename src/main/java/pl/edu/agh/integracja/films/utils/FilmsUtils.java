@@ -76,6 +76,10 @@ public class FilmsUtils {
 				movie.getPopularity(),
 				movie.getVoteCount(),
 				movie.getVoteAverage(),
+				movie.getImdbRating(),
+				movie.getImdbVotes(),
+				movie.getTomatoRating(),
+				movie.getTomatoUserRating(),
 				movie.getJmdbid()
 		};
 	}

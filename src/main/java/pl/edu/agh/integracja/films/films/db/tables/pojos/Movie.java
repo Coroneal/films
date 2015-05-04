@@ -27,7 +27,11 @@ public class Movie implements java.io.Serializable {
 	private final java.lang.Double  popularity;
 	private final java.lang.Integer voteCount;
 	private final java.lang.Double  voteAverage;
-	private java.lang.Long jmdbid;
+	private java.lang.Double  imdbRating;
+	private java.lang.Integer imdbVotes;
+	private java.lang.Double  tomatoRating;
+	private java.lang.Double  tomatoUserRating;
+	private java.lang.Long    jmdbid;
 
 	public Movie(
 		java.lang.Integer id,
@@ -39,6 +43,10 @@ public class Movie implements java.io.Serializable {
 		java.lang.Double  popularity,
 		java.lang.Integer voteCount,
 		java.lang.Double  voteAverage,
+		java.lang.Double  imdbRating,
+		java.lang.Integer imdbVotes,
+		java.lang.Double  tomatoRating,
+		java.lang.Double  tomatoUserRating,
 		java.lang.Long    jmdbid
 	) {
 		this.id = id;
@@ -50,6 +58,10 @@ public class Movie implements java.io.Serializable {
 		this.popularity = popularity;
 		this.voteCount = voteCount;
 		this.voteAverage = voteAverage;
+		this.imdbRating = imdbRating;
+		this.imdbVotes = imdbVotes;
+		this.tomatoRating = tomatoRating;
+		this.tomatoUserRating = tomatoUserRating;
 		this.jmdbid = jmdbid;
 	}
 
@@ -89,8 +101,40 @@ public class Movie implements java.io.Serializable {
 		return this.voteAverage;
 	}
 
+	public java.lang.Double getImdbRating() {
+		return this.imdbRating;
+	}
+
+	public java.lang.Integer getImdbVotes() {
+		return this.imdbVotes;
+	}
+
+	public java.lang.Double getTomatoRating() {
+		return this.tomatoRating;
+	}
+
+	public java.lang.Double getTomatoUserRating() {
+		return this.tomatoUserRating;
+	}
+
 	public java.lang.Long getJmdbid() {
 		return this.jmdbid;
+	}
+
+	public void setImdbRating(Double imdbRating) {
+		this.imdbRating = imdbRating;
+	}
+
+	public void setImdbVotes(Integer imdbVotes) {
+		this.imdbVotes = imdbVotes;
+	}
+
+	public void setTomatoRating(Double tomatoRating) {
+		this.tomatoRating = tomatoRating;
+	}
+
+	public void setTomatoUserRating(Double tomatoUserRating) {
+		this.tomatoUserRating = tomatoUserRating;
 	}
 
 	public void setJmdbid(Long jmdbid) {

@@ -11,6 +11,11 @@ import java.util.stream.Collectors;
 import org.apache.commons.lang3.tuple.Triple;
 import org.yamj.api.common.exception.ApiExceptionType;
 
+import com.omertron.omdbapi.OMDBException;
+import com.omertron.omdbapi.OmdbApi;
+import com.omertron.omdbapi.model.OmdbVideoFull;
+import com.omertron.omdbapi.model.SearchResults;
+import com.omertron.omdbapi.tools.OmdbBuilder;
 import com.omertron.themoviedbapi.MovieDbException;
 import com.omertron.themoviedbapi.TheMovieDbApi;
 import com.omertron.themoviedbapi.enumeration.SearchType;
@@ -63,7 +68,7 @@ public class TheMovieDbService {
 		Double popularity = (double) movieInfo.getPopularity();
 		Double voteAverage = (double) movieInfo.getVoteAverage();
 		Movie movie = new Movie(null, movieInfo.getTitle(), movieInfo.getOriginalLanguage(), releaseDate, movieInfo.getBudget(),
-				movieInfo.getRevenue(), popularity, movieInfo.getVoteCount(), voteAverage, null);
+				movieInfo.getRevenue(), popularity, movieInfo.getVoteCount(), voteAverage, null, null, null, null, null);
 
 		return Triple.of(movie, movieInfo, extractGenreIds(movieInfo.getGenres()));
 
